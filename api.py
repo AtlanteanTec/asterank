@@ -18,17 +18,19 @@ kepler_coll = db.kepler
 exoplanets_coll = db.exo
 user_objects_coll = db.user_objects
 
+# Special case sorts
 UPCOMING_SORT = 'upcoming'
 SMALL_SIZE_SORT = 'smallest'
+MOID_SORT = 'moid'
 
-VALID_SORTS = set(['value', 'profit', 'accessibility', 'score', UPCOMING_SORT, \
-    SMALL_SIZE_SORT])
+VALID_SORTS = set(['price', 'profit', 'closeness', 'score', UPCOMING_SORT, \
+    SMALL_SIZE_SORT, MOID_SORT])
 
 ORBIT_FIELDS = ['prov_des', 'full_name', 'price', 'profit', 'a', 'e', 'i', \
     'om', 'ma', 'n', 'w', 'per', 'epoch', 'spec']
 
-# some of these were poorly named, so we map better names, but the database stays the
-# same for backwards compatibility
+# Some database fields were poorly named, so we map better names. Unfortunately
+# the database must stay the same for backwards compatibility.
 FIELD_ALIASES = {
   'value': 'price',
   'accessibility': 'closeness',
@@ -40,15 +42,16 @@ def rankings(sort_by, limit, orbits_only=False):
     fields = {field: True for field in ORBIT_FIELDS}
   fields['_id'] = False
 
+  sort_by = FIELD_ALIASES.get(sort_by, sort_by)
+
   if sort_by not in VALID_SORTS:
     return None
   if sort_by == UPCOMING_SORT:
     return upcoming_passes()
-  if sort_by in FIELD_ALIASES:
-    sort_by = FIELD_ALIASES[sort_by]
-
   if sort_by == SMALL_SIZE_SORT:
     results = ranking_by_smallest(limit, fields)
+  if sort_by == MOID_SORT:
+    results = ranking_by_moid(limit, fields)
   else:
     results = list(asteroids.find({}, fields) \
             .sort(sort_by, direction=pymongo.DESCENDING) \
@@ -105,6 +108,10 @@ def upcoming_passes():
 def ranking_by_smallest(limit, fields):
   return list(asteroids.find({'diameter': {'$ne': ''}}, fields) \
       .sort('diameter', direction=pymongo.ASCENDING).limit(limit));
+
+def ranking_by_moid(limit, fields):
+  return list(asteroids.find({'moid': {'$ne': ''}}, fields) \
+      .sort('moid', direction=pymongo.ASCENDING).limit(limit));
 
 def jpl_lookup(query):
   result = jpl.find_one({'tag_name': query}, {'_id': False})

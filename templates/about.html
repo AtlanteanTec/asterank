@@ -13,22 +13,21 @@ function email() {
 <h1>About</h1>
 <p>This database is created and maintained by <a href="http://ianww.com">Ian Webster</a>. Asterank was acquired by <a href="http://www.planetaryresources.com/" target="_blank">Planetary Resources</a> in May 2013. The code is available <a href="http://github.com/typpo/asterank">on github</a>.</p>
 <p>
-Feedback and questions are welcome!  Please email: <script>document.write('<a href="mailto:' + email() + '">' + email() + '</a>');</script> or <a href="#" onClick="$('#contact_form').show();return false;">use this form</a>.
+  Asterank code has been generalized into <a href="https://typpo.github.io/spacekit/">SpaceKit</a>, a library for creating interactive 3D space visualizations.
+</p>
+<p>
+Feedback and questions are always appreciated.  Please email <script>document.write('<a href="mailto:' + email() + '">' + email() + '</a>');</script> or <a href="#" onClick="$('#contact_form').show();return false;">use this form</a>.
 
-<div id="contact_form" class="offset1" style="display:none;">
-<form method="POST">
-<label>Your email:<br><input type="text" name="email"/></label>
-Feedback<br><textarea style="width:45%;min-width:300px" name="feedback"></textarea>
-<br>
-<input type="submit"/>
-</form>
-</div>
+<script>
+document.write("<div id=\"contact_form\" class=\"offset1\" style=\"display:none;\">\r\n<form method=\"POST\">\r\n<label>Your email:<br><input type=\"text\" name=\"email\"\/><\/label>\r\nFeedback<br><textarea style=\"width:45%;min-width:300px\" name=\"feedback\"><\/textarea>\r\n<br>\r\n<input type=\"submit\"\/>\r\n<\/form>\r\n<\/div>");
+</script>
+
 </p>
 <div class="row-fluid">
   <h3>Accuracy</h3>
   <p>Scientists know very little about the composition of asteroids. Most data used in our calculations come from the JPL's <a href="http://ssd.jpl.nasa.gov/sbdb.cgi">Small Body Database</a> and the <a href="http://minorplanetcenter.org/iau/mpc.html">Minor Planet Center</a>. The overwhelming majority of asteroids have no spectral classification and are missing other important data attributes. Without full information it is impossible to fully estimate the true value of an asteroid or the cost of mining it.</p>
 
-  <p>Asterank applies accurate, up-to-date information from world markets and scientific papers.  To ensure realistic estimates, data from meteorities on Earth and known reference asteroids heavily influence our calculations.</p>
+  <p>Asterank applies accurate, up-to-date information from world markets and scientific papers.  To ensure realistic estimates, data from meteorites on Earth and known reference asteroids heavily influence our calculations.</p>
 
   <p>
   As validation, our accessibility scores agree with numbers produced by a 2012 report on <a href="http://www.kiss.caltech.edu/study/asteroid/asteroid_final_report.pdf">asteroid retrieval feasibility</a> by Caltech's Keck Institute for Space Studies.

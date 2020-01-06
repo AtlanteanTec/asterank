@@ -10,10 +10,10 @@ Asterank has been featured by BBC News, Popular Science, and other media.
 
 Asterank is configured to run with virtualenv.  Virtual environment setup:
 
-  1. Install these dependencies, eg. on ubuntu (jre is for google closure compiler):
+  1. Install python and python virtualenv dependencies, eg. on ubuntu:
 
     ```
-    sudo apt-get install python python-virtualenv default-jre
+    sudo apt-get install python python-virtualenv
     ```
 
   2. Enter the Asterank directory.  Then, create the virtual environment and install packages:
@@ -26,7 +26,16 @@ Asterank is configured to run with virtualenv.  Virtual environment setup:
 
   3. The web app requires mongodb.  `sudo apt-get install mongodb`.
 
-  4. The main app is a Flask web application.  You should be able to run it now.
+  4. The image pipeline requires some paths in `/var/asterank`.  Set them up like so:
+
+     ```
+     mkdir -p /var/asterank/neat_binary_store
+     mkdir -p /var/asterank/neat_binary_cache
+     mkdir -p /var/asterank/skymorph_store
+     mkdir -p /var/asterank/skymorph_cache
+     ```
+
+  5. The main app is a Flask web application.  You should be able to run it now.
 
     ```
     ./app.py
@@ -40,7 +49,7 @@ The `data/pipeline` folder contains the scrapers used to aggregate and build the
 
 ### SBDB setup
 
-The SBDB is too large to include in this repo, and downloading it takes some time.  Download http://www.ianww.com/fulldb.20130910.csv to `data/pipeline/static/`, or produce your own database by going to http://ssd.jpl.nasa.gov/sbdb_query.cgi and downloading all attributes for all objects in CSV format.
+The SBDB is too large to include in this repo, and downloading it takes some time.  Download http://www.ianww.com/latest_fulldb.csv to `data/pipeline/static/`, or produce your own database by going to http://ssd.jpl.nasa.gov/sbdb_query.cgi and downloading all attributes for all objects in CSV format.
 
 ### Running the pipeline
 

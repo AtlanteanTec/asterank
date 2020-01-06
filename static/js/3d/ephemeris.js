@@ -1,18 +1,17 @@
 window.Ephemeris = {
-  asteroid_2012_da14: {
-    full_name: '2012 DA14',
-    ma: 299.99868,
-    epoch: 2456200.5,
-    n: 0.98289640,
-    a: 1.0018381,
-    e: 0.1081389,
-    i: 10.33722,
+  asteroid_davidbowie: {
+    full_name: '342843 Davidbowie',
+    epoch: 2457200.5,
+    a: 2.747666931600445,
+    e: 0.08879027843646621,
+    i: 2.768108067009298,
 
-    w_bar: 58.33968,
-    w: 271.07725,   // ARGUMENT of perihelion.  argument = longitude of perihelion - longitude of ascending node
-    om: 147.26243,
+    w: 300.6986330539765,   // ARGUMENT of perihelion.  argument = longitude of perihelion - longitude of ascending node
+    om: 62.36399100210148,  // long of ascending node
+    ma: 220.1004135757952,   // mean anomaly
 
-    P: 365.256
+    P: 1663.583320494612,
+    n: 0.2164003423002377,
   },
 
   // http://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html
@@ -45,16 +44,15 @@ window.Ephemeris = {
   },
   earth: {
     full_name: 'Earth',
-    ma: -2.47311027,
     epoch: 2451545.0,
-    a:1.00000261,
+    ma: -2.47311027,
+    a: 1.00000261,
     e: 0.01671123,
-    i: 0.00001531,
-    w_bar: 102.93768193,
-    w: 102.93768193,
-    L: 100.46457166,
-    //om:-11.26064,
-    om: 0,
+    i: 0,
+    w_bar: 102.93768193,    // longitude of perihelion
+    w: 114.20783,           // arg of perihelion
+    L: 100.46457166,        // mean longitude
+    om: 348.73936,          // longitude of ascending node
     P: 365.256
   },
   mars:{
@@ -87,6 +85,6 @@ window.Ephemeris = {
 
 for (var x in Ephemeris) {
   if (Ephemeris.hasOwnProperty(x) && Ephemeris[x].w_bar && Ephemeris[x].L) {
-    Ephemeris[x].ma = Ephemeris[x].L - Ephemeris[x].w_bar;
+    //Ephemeris[x].ma = Ephemeris[x].L - Ephemeris[x].w_bar;
   }
 }

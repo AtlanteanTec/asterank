@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 from flask import Flask, request, redirect, session, url_for, render_template, Response, jsonify, make_response, send_from_directory
 from flask.ext.assets import Environment, Bundle
 from flask.ext.mail import Mail
@@ -31,7 +32,6 @@ try:
   app.config['ASSETS_DEBUG'] = local_config.DEBUG
 except ImportError:
   pass
-app.config['ASSETS_DEBUG'] = True
 
 # bundling
 assets = Environment(app)
@@ -50,9 +50,9 @@ def static_from_route():
 def index():
   return render_template('index.html')
 
-@app.route('/3d')
-def view_3d():
-  return render_template('full3d.html', noop=noop_filter)
+@app.route('/upcoming')
+def upcoming():
+  return render_template('upcoming.html')
 
 @app.route('/3d/')
 def view_3d_slash():
@@ -99,8 +99,8 @@ def asteroid_details(asteroid_slug=None):
 @app.route('/api/mpc')
 def api_mpc():
   try:
-    query = json.loads(request.args.get('query'))
-    limit = min(1000, int(request.args.get('limit')))
+    query = json.loads(request.args.get('query') or '{}')
+    limit = min(5000, int(request.args.get('limit') or 1000))
     json_resp = json.dumps(api.mpc(query, limit))
     return Response(json_resp, mimetype='application/json')
   except Exception, e:
@@ -175,7 +175,6 @@ def compositions():
   json_resp = json.dumps(api.compositions())
   return Response(json_resp, mimetype='application/json')
 
-
 @app.route('/jpl/lookup')
 def horizons():
   query = request.args.get('query')
@@ -242,6 +241,7 @@ def skymorph_fast_image():
     return response
 
 # SDSS routes
+
 @app.route('/api/sdss/get_unknown_group')
 def sdss_unknown_group():
   from sdss import sdss
@@ -259,6 +259,7 @@ def sdss_image():
   return response
 
 # Stack/blink Discover routes
+
 @app.route('/discover')
 def discover():
   first_time = session.get('discover_first_time', True)
@@ -328,16 +329,15 @@ def about():
   else:
     email = request.form.get('email', None)
     feedback = request.form.get('feedback', None)
-    if email.find('href') > -1:
+    if not feedback or feedback.find('a href') > -1:
       return 'Form rejected because you look like a spambot. Please email me directly.'
 
-    if feedback:
-      from flask.ext.mail import Message
-      msg = Message('Asterank Feedback',
-                sender='feedback@asterank.com',
-                recipients=['typppo@gmail.com'],
-                body='%s:\r\n%s' % (email, feedback))
-      mail.send(msg)
+    from flask.ext.mail import Message
+    msg = Message('Asterank Feedback',
+              sender='feedback@asterank.com',
+              recipients=['typppo@gmail.com'],
+              body='%s:\r\n%s' % (email, feedback))
+    mail.send(msg)
     return render_template('about.html')
 
 @app.route('/feedback')

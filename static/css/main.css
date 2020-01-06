@@ -27,6 +27,8 @@ a:hover {
 
 .basic-content {
   max-width: 900px; margin: 0 auto;
+  font-size: 16px;
+  line-height: 22px;
 }
 
 #top-container {
@@ -121,6 +123,10 @@ hr.top-bottom-divider {
 #selection-details li {
   font-size: 12px;
   line-height: 14px;
+}
+
+#results-table th {
+  cursor: default;
 }
 
 #results-table tr:hover {

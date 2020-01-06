@@ -38,7 +38,7 @@ function KineticCtrl($scope, $http) {
         x: xpos,
         y: ypos,
         radius: CIRCLE_RADIUS,
-        fill: 'none',
+        fill: 'transparent',
         stroke: 'green',
         strokeWidth: 3
       });

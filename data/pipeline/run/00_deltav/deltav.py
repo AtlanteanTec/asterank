@@ -13,7 +13,7 @@ import operator
 import pandas as pp
 
 if len(sys.argv) < 3:
-  DATA_PATH = 'data/fulldb.20140203.csv'
+  DATA_PATH = 'data/latest_sbdb.csv'
   DV_TEST_PATH = 'data/deltav/db.csv'
   OUTPUT_PATH = 'data/deltav/db2.csv'
 else:
@@ -96,12 +96,12 @@ print('\n\n% deviation for Amors:')
 print(results[(results.q > 1) & (results.a >= 1)].dv_diff.describe())
 
 print('\n\n30 asteroids with highest error:')
-outliers = results.sort(columns=['dv_diff'])[-30:]
+outliers = results.sort_values(by=['dv_diff'])[-30:]
 for pdes, row in outliers.iterrows():
   print('%s \t %.3f km/s (expected %.3f km/s) (error %%%.2f)' % (
       pdes, row['dv'], row['dv_benner'], row['dv_diff']*100))
 
-df = df.sort(columns=['dv'])
+df = df.sort_values(by=['dv'])
 print('\n\n30 asteroids with lowest delta-v:')
 for pdes, row in df[:30].iterrows():
   print('%s \t%.3f km/s' % (pdes, row['dv']))

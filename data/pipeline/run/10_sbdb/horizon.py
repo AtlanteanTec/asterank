@@ -43,7 +43,6 @@ def populatePartialDb():
 
 def _run(partial=False):
   # Constants and settings
-  # TODO this method should be factored out
 
   # Fill database
   conn = Connection('localhost', 27017)
@@ -107,11 +106,18 @@ def _run(partial=False):
       elif row['full_name'] == '6178 (1986 DA)':
         print 'Adjust 1986 DA'
         row['spec'] = 'M'
+      elif row['full_name'] == '436724 (2011 UW158)':
+        print 'Adjust 2011 UW158'
+        row['spec'] = 'Xc'
+      elif row['full_name'] == '101955 Bennu (1999 RQ36)':
+        print 'Adjust Bennu'
+        row['spec'] = 'B'
       elif row['class'] in COMET_CLASSES:
         row['spec'] = 'comet'
       else:
         if partial:
-          continue  # don't build the full db of 600k objects
+          # don't build the full db of 600k objects
+          continue
         row['spec'] = '?'
 
     if row['spec'] == 'C type':
@@ -133,6 +139,7 @@ def _run(partial=False):
 
     # Clean up inputs
     for key,val in row.items():
+      if val is None: val = ''
       try:
         fv = float(val)
       except ValueError, TypeError:
@@ -157,6 +164,7 @@ def _run(partial=False):
     row['profit'] = scoring.profit(row)
 
     # TODO move this final scoring pass into scoring.py
+
     # cap price influence on score at 10 B
     score = min(row['price'], 1e10) / 5e11
     if score > 0.0001:
@@ -165,7 +173,7 @@ def _run(partial=False):
 
     items.append(row)
     n += 1
-    if len(items) > 30000:
+    if len(items) > 20000:
       # insert into mongo
       print 'Row #', n, '... inserting/updating %d items into asteroids (SBDB) collection' % (len(items))
       coll.insert(items, continue_on_error=True)
@@ -187,7 +195,7 @@ def materials():
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Load data from NASA/JPL SBDB')
-  parser.add_argument('--data_path', help='path to sbdb export', default='data/fulldb.20140203.csv')
+  parser.add_argument('--data_path', help='path to sbdb export', default='data/latest_sbdb.csv')
   parser.add_argument('--dv_path', help='path to delta-v calculations', default='data/deltav/db.csv')
   parser.add_argument('--mass_path', help='path to mass data', default='data/masses.txt')
   parser.add_argument('fn', choices=['populateDb', 'populatePartialDb', 'compositions', 'materials'])

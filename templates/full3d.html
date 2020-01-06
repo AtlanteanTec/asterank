@@ -35,14 +35,17 @@
 
   <div id="show_sidebar_container" class="sidebar">
     <span id="show_sidebar" style="float:right;cursor:pointer;">+</span>
+    <p style="margin-top:0">
+      &laquo; <a href="/">Asteroid data view</a>
+    </p>
   </div>
   <div id="sidebar" class="sidebar">
     <span id="hide_sidebar" style="float:right;cursor:pointer;">-</span>
-    <p>
-    &laquo; <a href="/">Asteroid data view</a>
+    <p style="margin-top:0">
+      &laquo; <a href="/">Asteroid data view</a>
     </p>
 {% if not offline_mode %}
-    <div class="fb-like" data-href="http://www.asterank.com/3d/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+    <div class="fb-like" data-href="http://www.asterank.com/3d/" data-send="false" data-layout="button_count" data-width="950" data-show-faces="false"></div>
     <a style="font-size:10px;" href="https://twitter.com/share" data-url="http://asterank.com/3d/" data-counturl="http://asterank.com/3d/" class="twitter-share-button" data-lang="en">Tweet</a>
 <div>
     <g:plusone size="small" count="false"></g:plusone>
@@ -50,8 +53,8 @@
 {% endif %}
 
     <hr/>
-    <div id="objects-of-interest-container" style="text-align:center;display:none;">
-      <span>Significant Objects<br>&amp; estimated value</span>
+    <div id="objects-of-interest-container" style="text-align:center;display:none;opacity:.7;">
+      <span>Significant objects<br>&amp; estimated value</span>
       <table id="objects-of-interest">
         <tr id="sun-selector" data-full-name="sun" style="background-color:green;">
           <td colspan="2"><a href="#">Sun</a> (default view)</td>
@@ -59,9 +62,9 @@
         <tr id="earth-selector" data-full-name="earth">
           <td colspan="2"><a href="#">Earth</a></td>
         </tr>
-        <tr id="da14-selector" data-full-name="2012 DA14">
-          <td><a href="#">2012 DA14</a></td>
-          <td>$665 million</td>
+        <tr id="342843-Davidbowie-selector" data-full-name="342843 Davidbowie">
+          <td><a href="#">342843 Davidbowie</a></td>
+          <td></td>
         </tr>
       </table>
 
@@ -126,19 +129,18 @@
 {% if not offline_mode %}
 <script type="text/javascript">
 if(~document.location.href.indexOf('asterank.com')) {
-(function() {
-(function(d,c){var a,b,g,e;a=d.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===d.location.protocol?"https:":"http:")+'//api.mixpanel.com/site_media/js/api/mixpanel.2.js';b=d.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);c._i=[];c.init=function(a,d,f){var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";g="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config".split(" ");
-for(e=0;e<g.length;e++)(function(a){b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,0)))}})(g[e]);c._i.push([a,d,f])};window.mixpanel=c})(document,[]);
-})();
-mixpanel.init("6b34941ba1e8a39264cee7fccab432f2");mixpanel.track('3d');
-var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-32180949-1']);
-_gaq.push(['_trackPageview']);
-(function() {
-var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
+  (function() {
+  (function(d,c){var a,b,g,e;a=d.createElement("script");a.type="text/javascript";a.async=!0;a.src=("https:"===d.location.protocol?"https:":"http:")+'//api.mixpanel.com/site_media/js/api/mixpanel.2.js';b=d.getElementsByTagName("script")[0];b.parentNode.insertBefore(a,b);c._i=[];c.init=function(a,d,f){var b=c;"undefined"!==typeof f?b=c[f]=[]:f="mixpanel";g="disable track track_pageview track_links track_forms register register_once unregister identify name_tag set_config".split(" ");
+  for(e=0;e<g.length;e++)(function(a){b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,0)))}})(g[e]);c._i.push([a,d,f])};window.mixpanel=c})(document,[]);
+  })();
+  mixpanel.init("6b34941ba1e8a39264cee7fccab432f2");mixpanel.track('3d');
+
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-32180949-1', 'auto');
+  ga('send', 'pageview');
 }
 else {
   mixpanel = {track: function() {}};

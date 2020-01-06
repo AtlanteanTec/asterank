@@ -32,7 +32,7 @@ def get_unknown_group():
   pass
 
 def record(email, image_keys, interesting, poor_quality):
-  total_count = redis.incr(REDIS_COUNT_KEY, len(image_keys))
+  total_count = redis.incr(REDIS_COUNT_KEY, min(10, len(image_keys)))
   group_key = '||'.join(image_keys)
   stackblink_results.insert({
     'email': email,
@@ -44,7 +44,11 @@ def record(email, image_keys, interesting, poor_quality):
   return {'success': True, 'count': total_count}
 
 def get_image_count():
-  return int(redis.get(REDIS_COUNT_KEY))
+  val = redis.get(REDIS_COUNT_KEY)
+  if not val:
+    redis.set(REDIS_COUNT_KEY, 0)
+    return 0
+  return int(val)
 
 def get_interesting_count():
   return stackblink_results.find({'interesting': True}).count()
@@ -53,6 +57,5 @@ def get_user_count():
   return len(stackblink_results.distinct('email'))
 
 def update_group(id, positions, interesting):
-  # add crowdsourced info to group
-  # update pos_x, pos_y, reviews, score
+  # TODO add crowdsourced info to group. Update pos_x, pos_y, reviews, score
   pass
